@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/libro/AudioBook.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/repository/AuthorRepository.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/utils/SerializationUtils.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/repository/BookRepository.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/repository/ManagerRepository.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/repository/NarratorRepository.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/repository/PersonRepository.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/repository/PublisherRepository.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/repository/StandRepository.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/PersonController.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/PublisherController.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/StandController.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/BookController.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/utils/Response.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/main/Main.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/editoriales/Publisher.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/libro/Book.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/libro/DigitalBook.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/libro/PrintedBook.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/persona/Author.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/persona/Manager.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/persona/Narrator.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/persona/Person.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/stands/Stand.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/view/MegaferiaFrame.java</file>
+        </group>
+    </open-files>
+</project-private>

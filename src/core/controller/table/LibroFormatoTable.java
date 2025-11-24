@@ -6,8 +6,8 @@ import core.model.libro.Book;
 import core.model.persona.Author;
 import core.repository.BookRepository;
 
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class LibroFormatoTable {
 
@@ -23,29 +23,33 @@ public class LibroFormatoTable {
                     continue;
                 }
 
-                String authors = "";
+                StringBuilder authorsStr = new StringBuilder();
                 for (Author a : book.getAuthors()) {
-                    authors += a.getFirstName() + " " + a.getLastName() + ", ";
+                    authorsStr.append(a.getFirstName())
+                              .append(" ")
+                              .append(a.getLastName())
+                              .append(", ");
                 }
 
-                if (!authors.isEmpty()) {
-                    authors = authors.substring(0, authors.length() - 2);
+                if (authorsStr.length() > 2) {
+                    authorsStr.setLength(authorsStr.length() - 2);
                 }
 
-                Object[] row = {
+                model.addRow(new Object[]{
                         book.getIsbn(),
                         book.getTitle(),
                         book.getGenre(),
                         book.getFormat(),
                         book.getValue(),
                         book.getPublisher().getName(),
-                        authors
-                };
-
-                model.addRow(row);
+                        authorsStr.toString()
+                });
             }
 
-            return new Response("Tabla filtrada por formato correctamente", StatusCode.OK);
+            return new Response(
+                    "Tabla filtrada por formato correctamente",
+                    StatusCode.OK
+            );
 
         } catch (Exception e) {
             return new Response(

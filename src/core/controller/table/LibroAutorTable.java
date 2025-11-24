@@ -2,13 +2,16 @@ package core.controller.table;
 
 import core.controller.utils.Response;
 import core.controller.utils.StatusCode;
+import core.model.libro.AudioBook;
 import core.model.libro.Book;
+import core.model.libro.DigitalBook;
+import core.model.libro.PrintedBook;
 import core.model.persona.Author;
 import core.repository.AuthorRepository;
 import core.repository.BookRepository;
 
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class LibroAutorTable {
 
@@ -24,7 +27,6 @@ public class LibroAutorTable {
             }
 
             Author author = AuthorRepository.getInstance().findById(authorId);
-
             if (author == null) {
                 return new Response("Autor no encontrado", StatusCode.NOT_FOUND);
             }
@@ -32,34 +34,46 @@ public class LibroAutorTable {
             ArrayList<Book> books = BookRepository.getInstance().getAll();
 
             for (Book book : books) {
+                boolean tieneAutor = book.getAuthors()
+                        .stream()
+                        .anyMatch(a -> a.getId() == author.getId());
 
-                if (!book.getAuthors().contains(author)) {
+                if (!tieneAutor) {
                     continue;
                 }
 
-                String authors = "";
+                StringBuilder autoresStr = new StringBuilder();
                 for (Author a : book.getAuthors()) {
-                    authors += a.getFirstName() + " " + a.getLastName() + ", ";
+                    autoresStr.append(a.getFirstName())
+                            .append(" ")
+                            .append(a.getLastName())
+                            .append(", ");
                 }
 
-                if (!authors.isEmpty()) {
-                    authors = authors.substring(0, authors.length() - 2);
+                if (autoresStr.length() > 2) {
+                    autoresStr.setLength(autoresStr.length() - 2);
                 }
 
-                Object[] row = {
-                        book.getIsbn(),
-                        book.getTitle(),
-                        book.getGenre(),
-                        book.getFormat(),
-                        book.getValue(),
-                        book.getPublisher().getName(),
-                        authors
-                };
-
-                model.addRow(row);
+                model.addRow(new Object[]{
+                    book.getTitle(),
+                    autoresStr.toString(),
+                    book.getIsbn(),
+                    book.getGenre(),
+                    book.getFormat(),
+                    book.getValue(),
+                    book.getPublisher().getName(),
+                    book instanceof PrintedBook ? ((PrintedBook) book).getCopies() : "",
+                    book instanceof PrintedBook ? ((PrintedBook) book).getPages() : "", 
+                    book instanceof DigitalBook ? ((DigitalBook) book).getHyperlink() : "",
+                    book instanceof AudioBook ? ((AudioBook) book).getNarrator().getFirstName() + " " + ((AudioBook) book).getNarrator().getLastName() : "",
+                    book instanceof AudioBook ? ((AudioBook) book).getDuration() : ""
+                });
             }
 
-            return new Response("Tabla filtrada por autor correctamente", StatusCode.OK);
+            return new Response(
+                    "Tabla filtrada por autor correctamente",
+                    StatusCode.OK
+            );
 
         } catch (Exception e) {
             return new Response(
@@ -69,3 +83,6 @@ public class LibroAutorTable {
         }
     }
 }
+
+
+

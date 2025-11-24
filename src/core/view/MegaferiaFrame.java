@@ -1635,11 +1635,13 @@ public class MegaferiaFrame extends javax.swing.JFrame {
 
     private void Boton4_CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton4_CrearActionPerformed
         BookController bookController = new BookController();
+
         String title = TextField4_Titulo.getText().trim();
         String isbn = TextField4_ISBN.getText().trim();
         String genre = ComboBox4_Genero.getSelectedItem().toString();
         String valueText = TextField4_Valor.getText().trim();
         String publisherData = ComboBox4_Editorial.getSelectedItem().toString();
+
         double value;
 
         try {
@@ -1657,22 +1659,19 @@ public class MegaferiaFrame extends javax.swing.JFrame {
             return;
         }
 
-        if (selectedAuthorIds.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Debe agregar al menos un autor");
-            return;
-        }
+// El formato viene del ComboBox según el radio seleccionado
+        String format = ComboBox4_Formato.getSelectedItem().toString();
 
         Response response = null;
 
         if (RadioBoton4_Impreso.isSelected()) {
 
-            int pages;
-            int copies;
+            int pages, copies;
 
             try {
                 pages = Integer.parseInt(TextField4_Paginas.getText().trim());
                 copies = Integer.parseInt(TextField4_Ejemplares.getText().trim());
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Páginas y copias deben ser números");
                 return;
             }
@@ -1685,18 +1684,29 @@ public class MegaferiaFrame extends javax.swing.JFrame {
                     value,
                     nitPublisher,
                     pages,
-                    copies
+                    copies,
+                    format
             );
 
         } else if (RadioBoton4_Digital.isSelected()) {
 
             String url = TextField4_Hipervinculo.getText().trim();
-            response = bookController.createDigitalBook(title, selectedAuthorIds, isbn, genre, value, nitPublisher, url
+
+            response = bookController.createDigitalBook(
+                    title,
+                    selectedAuthorIds,
+                    isbn,
+                    genre,
+                    value,
+                    nitPublisher,
+                    url,
+                    format
             );
 
         } else if (RadioBoton4_Audio.isSelected()) {
 
             String narratorData = narradorselectlibro.getSelectedItem().toString();
+
             long narratorId;
             int duration;
 
@@ -1716,63 +1726,32 @@ public class MegaferiaFrame extends javax.swing.JFrame {
                     value,
                     nitPublisher,
                     narratorId,
-                    duration
+                    duration,
+                    format
             );
 
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un tipo de libro", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Seleccione un tipo de libro");
             return;
         }
 
-        if (response.getStatus() >= 500) {
-            JOptionPane.showMessageDialog(null,
-                    response.getMessage(),
-                    "Error " + response.getStatus(),
-                    JOptionPane.ERROR_MESSAGE);
-
-        } else if (response.getStatus() >= 400) {
-            JOptionPane.showMessageDialog(null,
-                    response.getMessage(),
-                    "Error " + response.getStatus(),
-                    JOptionPane.WARNING_MESSAGE);
-
-        } else {
-            JOptionPane.showMessageDialog(null,
-                    response.getMessage(),
-                    "Respuesta",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            TextField4_Titulo.setText("");
-            TextArea4_Autor.setText("");
-            TextField4_ISBN.setText("");
-            TextField4_Valor.setText("");
-            TextField4_Paginas.setText("");
-            TextField4_Ejemplares.setText("");
-            TextField4_Hipervinculo.setText("");
-            TextField4_Duracion.setText("");
-
-            ComboBox4_Genero.setSelectedIndex(0);
-            ComboBox4_Formato.setSelectedIndex(0);
-            ComboBox4_Editorial.setSelectedIndex(0);
-            narradorselectlibro.setSelectedIndex(0);
-
-            selectedAuthorIds.clear();
-        }
+        JOptionPane.showMessageDialog(null, response.getMessage());
 
     }//GEN-LAST:event_Boton4_CrearActionPerformed
 
     private void Boton5_AggStandActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton5_AggStandActionPerformed
         String standData = ComboBox5_IDStands.getSelectedItem().toString();
 
+        if (standData.equals("Seleccione uno...")) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un stand válido");
+            return;
+        }
+
         long standId;
         try {
-            if (standData.contains(" - ")) {
-                standId = Long.parseLong(standData.split(" - ")[0]);
-            } else {
-                standId = Long.parseLong(standData);
-            }
+            standId = Long.parseLong(standData.split(" - ")[0].trim());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Stand inválido");
+            JOptionPane.showMessageDialog(null, "Formato de stand inválido");
             return;
         }
 
@@ -1782,7 +1761,6 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         }
 
         selectedStandIds.add(standId);
-
         TextArea5_IDStands.append("Stand ID: " + standId + "\n");
 
         ComboBox5_IDStands.setSelectedIndex(0);
@@ -1796,22 +1774,25 @@ public class MegaferiaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton5_DelStandActionPerformed
 
     private void Boton5_AggEditorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton5_AggEditorialActionPerformed
-        String publisherData = ComboBox5_Editoriales.getSelectedItem().toString();
+        Object selected = ComboBox5_Editoriales.getSelectedItem();
 
-        if (publisherData.equals("Seleccione uno...")) {
+        if (selected == null || selected.toString().equals("Seleccione uno...")) {
             JOptionPane.showMessageDialog(null, "Debe seleccionar una editorial válida");
             return;
         }
 
-        if (!publisherData.contains("(") || !publisherData.contains(")")) {
+        String publisherData = selected.toString();
+
+        String nit;
+        try {
+            nit = publisherData.substring(
+                    publisherData.indexOf("(") + 1,
+                    publisherData.indexOf(")")
+            ).trim();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Formato de editorial inválido");
             return;
         }
-
-        String nit = publisherData.substring(
-                publisherData.indexOf("(") + 1,
-                publisherData.indexOf(")")
-        ).trim();
 
         if (nit.isEmpty()) {
             JOptionPane.showMessageDialog(null, "NIT inválido");
@@ -1826,10 +1807,7 @@ public class MegaferiaFrame extends javax.swing.JFrame {
         selectedPublisherNits.add(nit);
         TextArea5_Editoriales.append(publisherData + "\n");
 
-        if (ComboBox5_Editoriales.getItemCount() > 0) {
-            ComboBox5_Editoriales.setSelectedIndex(0);
-        }
-
+        ComboBox5_Editoriales.setSelectedIndex(0);
 
     }//GEN-LAST:event_Boton5_AggEditorialActionPerformed
 
@@ -1840,42 +1818,52 @@ public class MegaferiaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_Boton5_DelEditorialActionPerformed
 
     private void Boton5_ComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton5_ComprarActionPerformed
-        Object selected = ComboBox5_Editoriales.getSelectedItem();
+        String standData = ComboBox5_IDStands.getSelectedItem().toString();
 
-        if (selected == null) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una editorial");
+        if (standData.equals("Seleccione uno...")) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un stand válido");
             return;
         }
 
-        String publisherData = selected.toString();
+        long standId;
 
-        if (publisherData.equals("Seleccione uno...")) {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una editorial válida");
-            return;
-        }
-
-        String nit;
         try {
-            nit = publisherData.substring(
-                    publisherData.indexOf("(") + 1,
-                    publisherData.indexOf(")")
-            ).trim();
+            if (standData.contains(" - ")) {
+                standId = Long.parseLong(standData.split(" - ")[0]);
+            } else {
+                standId = Long.parseLong(standData);
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Formato de editorial inválido");
+            JOptionPane.showMessageDialog(null, "Stand inválido");
             return;
         }
 
-        if (selectedPublisherNits.contains(nit)) {
-            JOptionPane.showMessageDialog(null, "Esta editorial ya fue agregada");
+        if (selectedPublisherNits.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debe agregar al menos una editorial");
             return;
         }
 
-        selectedPublisherNits.add(nit);
-        TextArea5_Editoriales.append(publisherData + "\n");
+        StandController standController = new StandController();
 
-        if (ComboBox5_Editoriales.getItemCount() > 0) {
-            ComboBox5_Editoriales.setSelectedIndex(0);
+        Response response = standController.buyStand(
+                standId,
+                new ArrayList<>(selectedPublisherNits)
+        );
+
+        if (response.getStatus() >= 400) {
+            JOptionPane.showMessageDialog(null, response.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        JOptionPane.showMessageDialog(null, response.getMessage(),
+                "Compra Exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+        selectedPublisherNits.clear();
+        TextArea5_Editoriales.setText("");
+        ComboBox5_IDStands.setSelectedIndex(0);
+        ComboBox5_Editoriales.setSelectedIndex(0);
+
 
     }//GEN-LAST:event_Boton5_ComprarActionPerformed
 

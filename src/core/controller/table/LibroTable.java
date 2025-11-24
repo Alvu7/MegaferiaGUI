@@ -3,10 +3,11 @@ package core.controller.table;
 import core.controller.utils.Response;
 import core.controller.utils.StatusCode;
 import core.model.libro.Book;
+import core.model.persona.Author;
 import core.repository.BookRepository;
 
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class LibroTable {
 
@@ -16,25 +17,33 @@ public class LibroTable {
 
             ArrayList<Book> books = BookRepository.getInstance().getAll();
 
+            boolean filter = (search != null && !search.equalsIgnoreCase("Todos") && !search.trim().isEmpty());
+            
             for (Book book : books) {
 
-                if (search != null && !search.equalsIgnoreCase("Todos")) {
-                    if (!book.getIsbn().equalsIgnoreCase(search) &&
-                        !book.getTitle().equalsIgnoreCase(search)) {
-                        continue;
-                    }
+                if (filter) {
+                    String s = search.toLowerCase();
+
+                    boolean matches =
+                            book.getIsbn().toLowerCase().contains(s) ||
+                            book.getTitle().toLowerCase().contains(s);
+
+                    if (!matches) continue;
                 }
 
-                String authors = "";
-                for (var author : book.getAuthors()) {
-                    authors += author.getFirstName() + " " + author.getLastName() + ", ";
+                StringBuilder authorsBuilder = new StringBuilder();
+                for (Author author : book.getAuthors()) {
+                    authorsBuilder.append(author.getFirstName())
+                                  .append(" ")
+                                  .append(author.getLastName())
+                                  .append(", ");
                 }
 
-                if (!authors.isEmpty()) {
-                    authors = authors.substring(0, authors.length() - 2);
-                }
+                String authors = authorsBuilder.length() > 2
+                        ? authorsBuilder.substring(0, authorsBuilder.length() - 2)
+                        : "";
 
-                Object[] row = {
+                model.addRow(new Object[]{
                         book.getIsbn(),
                         book.getTitle(),
                         book.getGenre(),
@@ -42,9 +51,7 @@ public class LibroTable {
                         book.getValue(),
                         book.getPublisher().getName(),
                         authors
-                };
-
-                model.addRow(row);
+                });
             }
 
             return new Response("Tabla de libros actualizada correctamente", StatusCode.OK);

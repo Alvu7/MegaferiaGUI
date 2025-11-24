@@ -5,12 +5,14 @@ import core.controller.utils.StatusCode;
 import core.model.persona.Author;
 import core.model.persona.Manager;
 import core.model.persona.Narrator;
+import core.model.persona.Person;
 import core.repository.AuthorRepository;
 import core.repository.ManagerRepository;
 import core.repository.NarratorRepository;
 
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonaTable {
 
@@ -18,43 +20,27 @@ public class PersonaTable {
         try {
             model.setRowCount(0);
 
-            ArrayList<Author> autores =
-                    AuthorRepository.getInstance().getAllOrderedById();
+            List<Person> people = new ArrayList<>();
 
-            for (Author a : autores) {
-                Object[] row = {
-                        a.getId(),
-                        a.getFirstName(),
-                        a.getLastName(),
-                        "Autor"
-                };
-                model.addRow(row);
-            }
+            people.addAll(AuthorRepository.getInstance().getAllOrderedById());
+            people.addAll(ManagerRepository.getInstance().getAllOrderedById());
+            people.addAll(NarratorRepository.getInstance().getAllOrderedById());
 
-            ArrayList<Manager> gerentes =
-                    ManagerRepository.getInstance().getAllOrderedById();
+            people.sort((a, b) -> Long.compare(a.getId(), b.getId()));
 
-            for (Manager g : gerentes) {
-                Object[] row = {
-                        g.getId(),
-                        g.getFirstName(),
-                        g.getLastName(),
-                        "Gerente"
-                };
-                model.addRow(row);
-            }
+            for (Person p : people) {
 
-            ArrayList<Narrator> narradores =
-                    NarratorRepository.getInstance().getAllOrderedById();
+                String tipo =
+                        (p instanceof Author) ? "Autor" :
+                        (p instanceof Manager) ? "Gerente" :
+                        "Narrador";
 
-            for (Narrator n : narradores) {
-                Object[] row = {
-                        n.getId(),
-                        n.getFirstName(),
-                        n.getLastName(),
-                        "Narrador"
-                };
-                model.addRow(row);
+                model.addRow(new Object[]{
+                        p.getId(),
+                        p.getFirstName(),
+                        p.getLastName(),
+                        tipo
+                });
             }
 
             return new Response("Tabla de personas actualizada correctamente", StatusCode.OK);

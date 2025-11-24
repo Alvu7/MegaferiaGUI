@@ -28,6 +28,13 @@
             <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/persona/Person.java</file>
             <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/model/stands/Stand.java</file>
             <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/view/MegaferiaFrame.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/table/AutoresAddTable.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/table/LibroAutorTable.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/table/LibroFormatoTable.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/table/LibroTable.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/table/PersonaTable.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/table/PublisherTable.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/MegaferiaGUI-main/src/core/controller/table/StandTable.java</file>
         </group>
     </open-files>
 </project-private>

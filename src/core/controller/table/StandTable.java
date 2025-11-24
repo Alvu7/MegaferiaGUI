@@ -5,8 +5,8 @@ import core.controller.utils.StatusCode;
 import core.repository.StandRepository;
 import core.model.stands.Stand;
 
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class StandTable {
 
@@ -14,19 +14,21 @@ public class StandTable {
         try {
             model.setRowCount(0);
 
-            ArrayList<Stand> stands = StandRepository.getInstance().getAll();
+            ArrayList<Stand> stands = StandRepository.getInstance().getAllOrderedById();
 
             for (Stand stand : stands) {
-                Object[] row = {
+
+                model.addRow(new Object[]{
                         stand.getId(),
                         stand.getPrice(),
                         stand.getPublisherQuantity()
-                };
-
-                model.addRow(row);
+                });
             }
 
-            return new Response("Tabla de stands actualizada correctamente", StatusCode.OK);
+            return new Response(
+                    "Tabla de stands actualizada correctamente",
+                    StatusCode.OK
+            );
 
         } catch (Exception e) {
             return new Response(
@@ -36,3 +38,4 @@ public class StandTable {
         }
     }
 }
+

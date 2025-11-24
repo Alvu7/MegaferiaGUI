@@ -4,8 +4,9 @@ import core.controller.utils.Response;
 import core.controller.utils.StatusCode;
 import core.model.editoriales.Publisher;
 import core.repository.PublisherRepository;
-import java.util.ArrayList;
+
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 public class PublisherTable {
 
@@ -14,14 +15,17 @@ public class PublisherTable {
             model.setRowCount(0);
 
             ArrayList<Publisher> editoriales =
-                    PublisherRepository.getInstance().getAll();
+                    PublisherRepository.getInstance().getAllOrderedByNit();
 
             for (Publisher p : editoriales) {
+
+                String managerName = p.getManager().getFirstName() + " " + p.getManager().getLastName();
+
                 Object[] row = {
                         p.getNit(),
                         p.getName(),
                         p.getAddress(),
-                        p.getManager().getFirstName() + " " + p.getManager().getLastName(),
+                        managerName,
                         p.getBookQuantity(),
                         p.getStandQuantity()
                 };
@@ -29,11 +33,16 @@ public class PublisherTable {
                 model.addRow(row);
             }
 
-            return new Response("Tabla de editoriales actualizada", StatusCode.OK);
+            return new Response(
+                    "Tabla de editoriales actualizada",
+                    StatusCode.OK
+            );
 
         } catch (Exception e) {
-            return new Response("Error al actualizar tabla: " + e.getMessage(),
-                    StatusCode.INTERNAL_SERVER_ERROR);
+            return new Response(
+                    "Error al actualizar tabla: " + e.getMessage(),
+                    StatusCode.INTERNAL_SERVER_ERROR
+            );
         }
     }
 }
